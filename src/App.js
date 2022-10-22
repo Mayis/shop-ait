@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from "react-redux";
+import RegisterForm from "./pages/RegisterForm";
+import store from "./redux/store";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginForm from "./pages/LoginForm";
+import MainPage from "./pages/MainPage";
+import PageByCategory from "./pages/PageByCategory";
+import SelectedProductPage from "./pages/SelectedProductPage";
+import BusketPage from "./pages/BusketPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/category" element={<PageByCategory />}>
+            <Route path=":categoryId" element={<PageByCategory />} />
+          </Route>
+          <Route path="/products/current" element={<SelectedProductPage />}>
+            <Route path=":productId" element={<SelectedProductPage />} />
+          </Route>
+          <Route path="/busket" element={<BusketPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
